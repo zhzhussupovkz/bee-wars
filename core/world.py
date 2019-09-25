@@ -6,7 +6,7 @@ from core.bee import *
 from core.map import *
 
 class World():
-    SIZE = (640, 640)
+    SIZE = (800, 600)
 
     def __init__(self):
         pygame.init()
@@ -18,15 +18,11 @@ class World():
         self.screen = pygame.display.set_mode(self.SIZE)
         self.points = []
         self.map = Map(self.screen)
-        self.generate_level()
-        self.bee = Bee(self.screen, 320, 320)
-
-
-    def generate_level(self):
-        self.screen.blit(self.bg, [0, 0])
-        self.map.draw_map()
+        self.bee = Bee(self.screen, 400, 300)
 
     def draw(self):
+        self.screen.blit(self.bg, [0, 0])
+        self.map.draw_map()
         self.bee.draw()
 
     def play(self):

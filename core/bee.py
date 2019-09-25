@@ -10,22 +10,22 @@ class Bee():
         self.screen.blit(self.image, [self.x, self.y])
     
     def move_left(self):
-        self.x -= 0.4
+        self.x -= 0.8
         if self.x <= 16:
             self.x = 16
 
     def move_right(self):
-        self.x += 0.4
+        self.x += 0.8
         if self.x >= 560:
             self.x = 560
 
     def move_down(self):
         if self.y <= 560:
-            self.y += 0.4
+            self.y += 0.8
     
     def move_up(self):
         if self.y >= 16:
-            self.y -= 0.4
+            self.y -= 0.8
 
     def walk(self):
         key = pygame.key.get_pressed()
