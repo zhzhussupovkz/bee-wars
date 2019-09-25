@@ -3,6 +3,7 @@ import math
 import sys
 import random
 from core.bee import *
+from core.map import *
 
 class World():
     SIZE = (640, 640)
@@ -10,25 +11,20 @@ class World():
     def __init__(self):
         pygame.init()
         self.icon_img = pygame.image.load("./images/world/icon.png")
+        self.bg = pygame.image.load("./images/world/background.png")
         pygame.display.set_caption('Bee wars')
         pygame.display.set_icon(self.icon_img)
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
-        self.screen.fill((100, 100, 100))
         self.points = []
+        self.map = Map(self.screen)
         self.generate_level()
         self.bee = Bee(self.screen, 320, 320)
 
+
     def generate_level(self):
-        for i in range(16):
-            posx = random.randint(40, 600)
-            posy = random.randint(40, 600)
-            x, y, z = random.randint(1, 254), random.randint(1, 254), random.randint(1, 254)
-            self.points.append([[posx, posy], (x, y, z)])
-        
-        for x, y in [(x, y) for x in range(self.SIZE[0]) for y in range(self.SIZE[1])]:
-            if self.screen.get_at((x, y))[:-1] != (255, 255, 255):
-                self.screen.set_at((x, y), min([(math.sqrt((x - i[0][0])**2 + (y - i[0][1])**2), i[1]) for i in self.points])[1])
+        self.screen.blit(self.bg, [0, 0])
+        self.map.draw_map()
 
     def draw(self):
         self.bee.draw()
