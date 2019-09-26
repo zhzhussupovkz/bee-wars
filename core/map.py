@@ -10,8 +10,8 @@ class Map():
         self.color = (0, 0, 128)
 
     def __generate_voronoi(self):
-        points = numpy.zeros([832, 2], numpy.uint16)
-        for i in range(-32, 832, 32):
+        points = numpy.zeros([32, 2], numpy.uint16)
+        for i in range(0, 32):
             points[i][0] = numpy.uint16(random.randint(0, 800))
             points[i][1] = numpy.uint16(random.randint(0, 400))
         return Voronoi(points)
