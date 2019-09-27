@@ -18,7 +18,7 @@ class World():
         self.screen = pygame.display.set_mode(self.SIZE)
         self.points = []
         self.map = Map(self.screen)
-        self.bee = Bee(self.screen, self.map.coord[0] + 32, self.map.coord[1] + 32)
+        self.bee = Bee(self.screen, self.map.coord[0] - 32, self.map.coord[1] - 32)
 
     def draw(self):
         self.screen.blit(self.bg, [0, 0])
