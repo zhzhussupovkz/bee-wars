@@ -16,11 +16,11 @@ class Bee():
 
     def move_right(self):
         self.x += 0.8
-        if self.x >= 560:
-            self.x = 560
+        if self.x >= 732:
+            self.x = 732
 
     def move_down(self):
-        if self.y <= 560:
+        if self.y <= 532:
             self.y += 0.8
     
     def move_up(self):
