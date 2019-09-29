@@ -10,6 +10,7 @@ class World():
 
     def __init__(self):
         pygame.init()
+        self.clock = pygame.time.Clock()
         self.icon_img = pygame.image.load("./images/world/icon.png")
         self.bg = pygame.image.load("./images/world/background.png")
         pygame.display.set_caption('Bee wars')
@@ -18,12 +19,12 @@ class World():
         self.screen = pygame.display.set_mode(self.SIZE)
         self.points = []
         self.map = Map(self.screen)
-        self.bee = Bee(self.screen, self.map.coord[0] - 32, self.map.coord[1] - 32)
+        self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
 
     def draw(self):
         self.screen.blit(self.bg, [0, 0])
         self.map.draw_map()
-        self.bee.draw()
+        self.bee.draw(self.screen)
 
     def play(self):
         while True:
@@ -34,6 +35,7 @@ class World():
             if key[pygame.K_ESCAPE]:
                 sys.exit()
             self.draw()
-            self.bee.walk()
+            self.bee.update()
             pygame.display.flip()
+            self.clock.tick(300)
         pygame.quit()
