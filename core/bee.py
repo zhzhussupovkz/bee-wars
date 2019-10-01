@@ -20,36 +20,40 @@ class BeeSprite(pygame.sprite.Sprite):
     def move_left(self):
         self.face = 'left'
         self.index += 1
-        if self.index >= len(self.left):
+        if self.index >= len(self.left) * 10:
             self.index = 0
-        self.image = self.left[self.index]
+        if self.index % 10 == 0:
+            self.image = self.left[int(self.index/10)]
         self.rect = pygame.Rect(self.x - 0.75, self.y, 64, 64)
         self.x -= 0.75
 
     def move_right(self):
         self.face = 'right'
         self.index += 1
-        if self.index >= len(self.right):
+        if self.index >= len(self.right) * 10:
             self.index = 0
-        self.image = self.right[self.index]
+        if self.index % 10 == 0:
+            self.image = self.right[int(self.index/10)]
         self.rect = pygame.Rect(self.x + 0.75, self.y, 64, 64)
         self.x += 0.75
 
     def move_down(self):
         self.face = 'down'
         self.index += 1
-        if self.index >= len(self.down):
+        if self.index >= len(self.down) * 10:
             self.index = 0
-        self.image = self.down[self.index]
+        if self.index % 10 == 0:
+            self.image = self.down[int(self.index/10)]
         self.rect = pygame.Rect(self.x, self.y + 0.75, 64, 64)
         self.y += 0.75
 
     def move_up(self):
         self.face = 'up'
         self.index += 1
-        if self.index >= len(self.up):
+        if self.index >= len(self.up) * 10:
             self.index = 0
-        self.image = self.up[self.index]
+        if self.index % 10 == 0:
+            self.image = self.up[int(self.index/10)]
         self.rect = pygame.Rect(self.x, self.y - 0.75, 64, 64)
         self.y -= 0.75
 

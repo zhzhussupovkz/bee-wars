@@ -20,8 +20,8 @@ class World():
         self.screen = pygame.display.set_mode(self.SIZE)
         self.points = []
         self.map = Map(self.screen)
-        self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
         self.enemies = self._generate_enemies(self.map.enemy_coords)
+        self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
 
     def _generate_enemies(self, coords):
         enemies = []

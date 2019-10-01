@@ -13,8 +13,8 @@ class EnemySprite(pygame.sprite.Sprite):
             self.right.append(pygame.image.load("./images/enemies/enemy1-right_{}.png".format(i+1)))
             self.down.append(pygame.image.load("./images/enemies/enemy1-down_{}.png".format(i+1)))
             self.up.append(pygame.image.load("./images/enemies/enemy1-up_{}.png".format(i+1)))
-        self.index = 0
-        self.image = self.right[self.index]
+        self.index = random.randint(0, len(self.left) * 30)
+        self.image = self.right[int(self.index/30)]
         self.x, self.y, self.face = x, y, face
         self.right_x, self.left_x = x + random.randint(64, 72), x - random.randint(64, 72)
         self.down_y, self.up_y = y + random.randint(64, 72), y - random.randint(64, 72)
@@ -62,22 +62,22 @@ class EnemySprite(pygame.sprite.Sprite):
 
     def update(self):
         if self.face == 'right':
-            if self.x <= self.right_x:
+            if self.x <= self.right_x and self.x <= 732:
                 self.move_right()
             else:
                 self.face = 'left'
         elif self.face == 'left':
-            if self.x >= self.left_x:
+            if self.x >= self.left_x and self.x >= 16:
                 self.move_left()
             else:
                 self.face = 'right'
         elif self.face == 'down':
-            if self.y <= self.down_y:
+            if self.y <= self.down_y and self.y <= 532:
                 self.move_down()
             else:
                 self.face = 'up'
         elif self.face == 'up':
-            if self.y >= self.up_y:
+            if self.y >= self.up_y and self.y >= 32:
                 self.move_up()
             else:
                 self.face = 'down'
