@@ -4,6 +4,7 @@ import sys
 import random
 from core.bee import *
 from core.map import *
+from core.enemy import *
 
 class World():
     SIZE = (800, 600)
@@ -20,11 +21,21 @@ class World():
         self.points = []
         self.map = Map(self.screen)
         self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
+        self.enemies = self._generate_enemies(self.map.enemy_coords)
+
+    def _generate_enemies(self, coords):
+        enemies = []
+        face = ['left', 'right', 'down', 'up']
+        for coord in coords:
+            enemies.append(Enemy(self.screen, coord[0] - 16, coord[1] - 32, random.choice(face)))
+        return enemies
 
     def draw(self):
         self.screen.blit(self.bg, [0, 0])
         self.map.draw_map()
         self.bee.draw(self.screen)
+        for enemy in self.enemies:
+            enemy.draw(self.screen)
 
     def play(self):
         while True:
@@ -36,6 +47,8 @@ class World():
                 sys.exit()
             self.draw()
             self.bee.update()
+            for enemy in self.enemies:
+                enemy.update()
             pygame.display.flip()
             self.clock.tick(300)
         pygame.quit()
