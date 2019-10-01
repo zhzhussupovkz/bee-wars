@@ -16,7 +16,8 @@ class Map():
                 points[i * 6 + j][0] = numpy.uint16(random.randint(i * 100 + 16, (i + 1) * 100 - 32))
                 points[i * 6 + j][1] = numpy.uint16(random.randint(j * 100 + 16, (j + 1) * 100 - 32))
         self.coord = tuple(random.choice(points))
-        self.enemy_coords = [tuple(i) for i in random.sample(list(points), 7)]
+        enemy_points = [p for p in points if tuple(p) != self.coord]
+        self.enemy_coords = [tuple(i) for i in random.sample(enemy_points, 7)]
         return Voronoi(points)
 
     def draw_map(self):
