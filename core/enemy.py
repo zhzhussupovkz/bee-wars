@@ -8,13 +8,14 @@ class EnemySprite(pygame.sprite.Sprite):
         super(EnemySprite, self).__init__()
         self.screen = screen
         self.left, self.right, self.up, self.down = [], [], [], []
+        enemy_type = random.choice(['1', '2'])
         for i in range(3):
-            self.left.append(pygame.image.load("./images/enemies/enemy1-left_{}.png".format(i+1)))
-            self.right.append(pygame.image.load("./images/enemies/enemy1-right_{}.png".format(i+1)))
-            self.down.append(pygame.image.load("./images/enemies/enemy1-down_{}.png".format(i+1)))
-            self.up.append(pygame.image.load("./images/enemies/enemy1-up_{}.png".format(i+1)))
-        self.index = random.randint(0, len(self.left) * 30)
-        self.image = self.right[int(self.index/30)]
+            self.left.append(pygame.image.load("./images/enemies/enemy{}-left_{}.png".format(enemy_type, i+1)))
+            self.right.append(pygame.image.load("./images/enemies/enemy{}-right_{}.png".format(enemy_type, i+1)))
+            self.down.append(pygame.image.load("./images/enemies/enemy{}-down_{}.png".format(enemy_type, i+1)))
+            self.up.append(pygame.image.load("./images/enemies/enemy{}-up_{}.png".format(enemy_type, i+1)))
+        self.index = 0
+        self.image = self.right[self.index]
         self.x, self.y, self.face = x, y, face
         self.right_x, self.left_x = x + random.randint(64, 72), x - random.randint(64, 72)
         self.down_y, self.up_y = y + random.randint(64, 72), y - random.randint(64, 72)
