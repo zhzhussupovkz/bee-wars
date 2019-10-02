@@ -8,7 +8,7 @@ class EnemySprite(pygame.sprite.Sprite):
         super(EnemySprite, self).__init__()
         self.screen = screen
         self.left, self.right, self.up, self.down = [], [], [], []
-        enemy_type = random.choice(['1', '2'])
+        enemy_type = random.choice([str(i) for i in range(1, 4)])
         for i in range(3):
             self.left.append(pygame.image.load("./images/enemies/enemy{}-left_{}.png".format(enemy_type, i+1)))
             self.right.append(pygame.image.load("./images/enemies/enemy{}-right_{}.png".format(enemy_type, i+1)))
