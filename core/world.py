@@ -34,6 +34,7 @@ class World():
         self.screen.blit(self.bg, [0, 0])
         self.map.draw_map()
         self.bee.draw(self.screen)
+        self.bee.drawing()
         for enemy in self.enemies:
             enemy.draw(self.screen)
 

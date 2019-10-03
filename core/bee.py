@@ -67,6 +67,8 @@ class Bee(pygame.sprite.Group):
         self.bee_sprite = BeeSprite(self.screen, x, y)
         self.x, self.y = self.bee_sprite.x, self.bee_sprite.y
         self.face, self.centerx, self.centery = 'right', self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
+        self.heart_img = pygame.image.load('./images/bee/heart.png')
+        self.lives = 3
         super(Bee, self).__init__(self.bee_sprite)
 
     def update(self):
@@ -75,6 +77,11 @@ class Bee(pygame.sprite.Group):
         self.centerx, self.centery = self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.walk()
         super(Bee, self).update()
+
+    def drawing(self):
+        if self.lives > 0:
+            for i in range(self.lives):
+                self.screen.blit(self.heart_img, [772-(i*20), 8])
 
     def move_left(self):
         self.bee_sprite.move_left()
