@@ -5,6 +5,7 @@ import random
 from core.bee import *
 from core.map import *
 from core.enemy import *
+from core.honey import *
 
 class World():
     SIZE = (800, 600)
@@ -21,6 +22,7 @@ class World():
         self.points = []
         self.map = Map(self.screen)
         self.enemies = self._generate_enemies(self.map.enemy_coords)
+        self.honey = Honey(self.screen, self.map.honey_coord[0] - 32, self.map.honey_coord[1] - 32)
         self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
 
     def _generate_enemies(self, coords):
@@ -33,6 +35,7 @@ class World():
     def draw(self):
         self.screen.blit(self.bg, [0, 0])
         self.map.draw_map()
+        self.honey.draw()
         self.bee.draw(self.screen)
         self.bee.drawing()
         for enemy in self.enemies:

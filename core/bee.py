@@ -1,4 +1,5 @@
 import pygame
+from core.weapon import *
 
 # Bee sprite
 class BeeSprite(pygame.sprite.Sprite):
@@ -68,7 +69,8 @@ class Bee(pygame.sprite.Group):
         self.x, self.y = self.bee_sprite.x, self.bee_sprite.y
         self.face, self.centerx, self.centery = 'right', self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.heart_img = pygame.image.load('./images/bee/heart.png')
-        self.lives = 3
+        self.lives, self.stamina = 3, 100
+        self.weapon = Weapon(self.screen, self)
         super(Bee, self).__init__(self.bee_sprite)
 
     def update(self):
@@ -76,12 +78,17 @@ class Bee(pygame.sprite.Group):
         self.x, self.y = self.bee_sprite.x, self.bee_sprite.y
         self.centerx, self.centery = self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.walk()
+        key = pygame.key.get_pressed()
+        if key[pygame.K_SPACE]:
+            self.attack()
+        self.weapon.update()
         super(Bee, self).update()
 
     def drawing(self):
         if self.lives > 0:
             for i in range(self.lives):
-                self.screen.blit(self.heart_img, [772-(i*20), 8])
+                self.screen.blit(self.heart_img, [772 - (i*20), 8])
+        self.weapon.draw()
 
     def move_left(self):
         self.bee_sprite.move_left()
@@ -105,3 +112,7 @@ class Bee(pygame.sprite.Group):
             self.move_up()
         elif key[pygame.K_DOWN] and self.y <= 532:
             self.move_down()
+
+    # attack by weapon
+    def attack(self):
+        self.weapon.drawing = True
