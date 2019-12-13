@@ -2,6 +2,7 @@ import pygame
 import math
 import sys
 import random
+import datetime
 from core.bee import *
 from core.map import *
 from core.enemy import *
@@ -15,6 +16,7 @@ class World():
         self.clock = pygame.time.Clock()
         self.icon_img = pygame.image.load("./images/world/icon.png")
         self.bg = pygame.image.load("./images/world/background.png")
+        self.ui = pygame.font.SysFont("monaco", 16)
         pygame.display.set_caption('Bee wars')
         pygame.display.set_icon(self.icon_img)
         self.pygame = pygame
@@ -34,6 +36,9 @@ class World():
 
     def draw(self):
         self.screen.blit(self.bg, [0, 0])
+        cyear = datetime.datetime.now().year
+        cp = self.ui.render("Copyright (c) %s by zhzhussupovkz" % cyear, 3, (255, 255, 255))
+        self.screen.blit(cp, [320, 576])
         self.map.draw_map()
         self.honey.draw()
         self.bee.draw(self.screen)
