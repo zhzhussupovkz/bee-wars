@@ -70,7 +70,12 @@ class Bee(pygame.sprite.Group):
         self.face, self.centerx, self.centery = 'right', self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.heart_img = pygame.image.load('./images/bee/heart.png')
         self.lives, self.stamina, self.score = 3, 100, 0
-        self.weapon = Weapon(self.screen, self)
+        self.weapons = (
+            Weapon(self.screen, self, 'left'),
+            Weapon(self.screen, self, 'right'),
+            Weapon(self.screen, self, 'up'),
+            Weapon(self.screen, self, 'down')
+        )
         self.ui_score = pygame.font.SysFont("monaco", 24)
         super(Bee, self).__init__(self.bee_sprite)
 
@@ -79,10 +84,9 @@ class Bee(pygame.sprite.Group):
         self.x, self.y = self.bee_sprite.x, self.bee_sprite.y
         self.centerx, self.centery = self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.walk()
-        key = pygame.key.get_pressed()
-        if key[pygame.K_SPACE]:
-            self.attack()
-        self.weapon.update()
+        self.attack()
+        for weapon in self.weapons:
+            weapon.update()
         super(Bee, self).update()
 
     def drawing(self):
@@ -91,7 +95,8 @@ class Bee(pygame.sprite.Group):
                 self.screen.blit(self.heart_img, [772 - (i*20), 8])
         ui_img_score = self.ui_score.render("{}".format(int(self.score)), 3, (255, 255, 255))
         self.screen.blit(ui_img_score, [716, 8])
-        self.weapon.draw()
+        for weapon in self.weapons:
+            weapon.draw()
 
     def move_left(self):
         self.bee_sprite.move_left()
@@ -118,4 +123,13 @@ class Bee(pygame.sprite.Group):
 
     # attack by weapon
     def attack(self):
-        self.weapon.drawing = True
+        key = pygame.key.get_pressed()
+        if key[pygame.K_SPACE]:
+            if self.face == 'left':
+                self.weapons[0].drawing = True
+            elif self.face == 'right':
+                self.weapons[1].drawing = True
+            elif self.face == 'up':
+                self.weapons[2].drawing = True
+            elif self.face == 'down':
+                self.weapons[-1].drawing = True
