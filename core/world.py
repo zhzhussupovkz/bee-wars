@@ -7,6 +7,7 @@ from core.bee import *
 from core.map import *
 from core.enemy import *
 from core.honey import *
+from core.coin import *
 
 class World():
     SIZE = (800, 600)
@@ -24,6 +25,7 @@ class World():
         self.points = []
         self.map = Map(self.screen)
         self.enemies = self._generate_enemies(self.map.enemy_coords)
+        self.coins = self._generate_coins()
         self.honey = Honey(self.screen, self.map.honey_coord[0] - 32, self.map.honey_coord[1] - 32)
         self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
 
@@ -33,6 +35,11 @@ class World():
         for coord in coords:
             enemies.append(Enemy(self.screen, coord[0] - 16, coord[1] - 32, random.choice(face)))
         return enemies
+
+    def _generate_coins(self):
+        coins = [Coin(self.screen, 320 + i * 64, random.randint(320, 350)) for i in range(5)]
+        coins += [Coin(self.screen, 32 + i * 72, random.randint(64, 96)) for i in range(5)]
+        return coins
 
     def draw(self):
         self.screen.blit(self.bg, [0, 0])
@@ -45,6 +52,8 @@ class World():
         self.bee.drawing()
         for enemy in self.enemies:
             enemy.draw(self.screen)
+        for coin in self.coins:
+            coin.draw(self.screen)
 
     def play(self):
         while True:
@@ -58,6 +67,8 @@ class World():
             self.bee.update()
             for enemy in self.enemies:
                 enemy.update()
+            for coin in self.coins:
+                coin.update()
             pygame.display.flip()
             self.clock.tick(300)
         pygame.quit()
