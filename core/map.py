@@ -27,3 +27,4 @@ class Map():
                 start_pos = self.voronoi.vertices[i[0]]
                 end_pos = self.voronoi.vertices[i[1]]
                 pygame.draw.line(self.screen, self.color, start_pos, end_pos)
+

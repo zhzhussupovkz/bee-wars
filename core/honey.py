@@ -11,3 +11,4 @@ class Honey():
     def draw(self):
         if self.drawing:
             self.screen.blit(self.image, [self.x, self.y])
+
