@@ -1,4 +1,5 @@
 import pygame
+import math
 from core.weapon import *
 
 # Bee sprite
@@ -63,13 +64,15 @@ class BeeSprite(pygame.sprite.Sprite):
 
 # Bee class - main player
 class Bee(pygame.sprite.Group):
-    def __init__(self, screen, x, y):
-        self.screen = screen
+    def __init__(self, world, x, y):
+        self.world = world
+        self.screen = self.world.screen
         self.bee_sprite = BeeSprite(self.screen, x, y)
         self.x, self.y = self.bee_sprite.x, self.bee_sprite.y
         self.face, self.centerx, self.centery = 'right', self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.heart_img = pygame.image.load('./images/bee/heart.png')
-        self.lives, self.stamina, self.score = 3, 100, 0
+        self.coin_img = pygame.image.load('./images/bee/coin.png')
+        self.lives, self.stamina, self.coins = 3, 100, 0
         self.weapons = (
             Weapon(self.screen, self, 'left'),
             Weapon(self.screen, self, 'right'),
@@ -85,6 +88,7 @@ class Bee(pygame.sprite.Group):
         self.centerx, self.centery = self.bee_sprite.rect.centerx, self.bee_sprite.rect.centery
         self.walk()
         self.attack()
+        self.collect_coins()
         for weapon in self.weapons:
             weapon.update()
         super(Bee, self).update()
@@ -93,8 +97,9 @@ class Bee(pygame.sprite.Group):
         if self.lives > 0:
             for i in range(self.lives):
                 self.screen.blit(self.heart_img, [772 - (i*20), 8])
-        ui_img_score = self.ui_score.render("{}".format(int(self.score)), 3, (255, 255, 255))
-        self.screen.blit(ui_img_score, [716, 8])
+        ui_img_score = self.ui_score.render("{}".format(int(self.coins)), 3, (255, 255, 255))
+        self.screen.blit(self.coin_img, [8, 6])
+        self.screen.blit(ui_img_score, [40, 8])
         for weapon in self.weapons:
             weapon.draw()
 
@@ -133,3 +138,12 @@ class Bee(pygame.sprite.Group):
                 self.weapons[2].drawing = True
             elif self.face == 'down':
                 self.weapons[-1].drawing = True
+
+    # collect coins
+    def collect_coins(self):
+        for coin in self.world.coins:
+            d = math.sqrt((self.centerx - coin.x)**2 + (self.centery - coin.y)**2)
+            if d <= 16:
+                self.world.coins.pop(self.world.coins.index(coin))
+                self.coins += 1
+

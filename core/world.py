@@ -24,10 +24,10 @@ class World():
         self.screen = pygame.display.set_mode(self.SIZE)
         self.points = []
         self.map = Map(self.screen)
-        self.enemies = self._generate_enemies(self.map.enemy_coords)
         self.coins = self._generate_coins()
+        self.enemies = self._generate_enemies(self.map.enemy_coords)
         self.honey = Honey(self.screen, self.map.honey_coord[0] - 32, self.map.honey_coord[1] - 32)
-        self.bee = Bee(self.screen, self.map.coord[0] - 16, self.map.coord[1] - 32)
+        self.bee = Bee(self, self.map.coord[0] - 16, self.map.coord[1] - 32)
 
     def _generate_enemies(self, coords):
         enemies = []
@@ -37,8 +37,9 @@ class World():
         return enemies
 
     def _generate_coins(self):
-        coins = [Coin(self.screen, 320 + i * 64, random.randint(320, 350)) for i in range(5)]
-        coins += [Coin(self.screen, 32 + i * 72, random.randint(64, 96)) for i in range(5)]
+        coins = [Coin(self.screen, 320 + i * 64, random.randint(256, 320)) for i in range(3)]
+        coins += [Coin(self.screen, 32 + i * 72, random.randint(64, 96)) for i in range(2)]
+        coins += [Coin(self.screen, 256 + i * 64, random.randint(500, 520)) for i in range(2)]
         return coins
 
     def draw(self):
