@@ -91,6 +91,7 @@ class Bee(pygame.sprite.Group):
         self.collect_coins()
         for weapon in self.weapons:
             weapon.update()
+        self.add_injury_to_enemies()
         super(Bee, self).update()
 
     def drawing(self):
@@ -146,4 +147,14 @@ class Bee(pygame.sprite.Group):
             if d <= 16:
                 self.world.coins.pop(self.world.coins.index(coin))
                 self.coins += 1
+
+    # add injury to enemies
+    def add_injury_to_enemies(self):
+        for weapon in self.weapons:
+            if weapon.drawing:
+                for enemy in self.world.enemies:
+                    d = math.sqrt((weapon.centerx - enemy.centerx)**2 + (weapon.centery - enemy.centery)**2)
+                    if d <= 4:
+                        weapon.drawing = False
+                        self.world.enemies.pop(self.world.enemies.index(enemy))
 
